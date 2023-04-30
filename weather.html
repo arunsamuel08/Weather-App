@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1"
+    />
+    <title>SkyWatch</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="weather-cont">
+      <div class="main-content">
+        <div class="header"><i class="fas fa-cloud"></i> ClimateWatch</div>
+        <div class="inputbox">
+          <input placeholder="Enter city name" type="text" />
+          <button class="searchbtn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="location">
+          <img class="locationicon" src="./assets/images/pin.png" />
+          <p>New Delhi, India</p>
+        </div>
+        <div class="temperature">21°</div>
+
+        <div class="daydate">
+          <p class="day">Sunday</p>
+          |
+          <p class="date">30 April</p>
+          |
+          <p class="daytype">Sunny</p>
+        </div>
+
+        <hr />
+
+        <div class="extrainfo">
+          <div class="wind-card">
+            <i class="fas fa-wind"></i>
+            <p class="windspeed">4km/h</p>
+            <p class="windlabel">Wind</p>
+          </div>
+
+          <div class="wind-card">
+            <img src="./assets/images/humidity.png" alt="humidity" />
+            <p class="windspeed">4km/h</p>
+            <p class="windlabel">Wind</p>
+          </div>
+
+          <div class="wind-card">
+            <i class="fas fa-eye"></i>
+            <p class="windspeed">1KM</p>
+            <p class="windlabel">Visibility</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="forecast-cont">
+        <div class="forecast-head">
+          <h3>Forecast</h3>
+        </div>
+        <div class="forecast-cards">
+          <div class="card1">
+            <img src="./assets/images/sun.png" alt="sunny" />
+            <div class="card-details">
+              <h2>26°</h2>
+              <p>May 1</p>
+            </div>
+          </div>
+          <div class="card2">
+            <img src="./assets/images/rainy.png" alt="rainy" />
+            <div class="card-details">
+              <h2>17°</h2>
+              <p>May 2</p>
+            </div>
+          </div>
+          <div class="card3">
+            <img src="./assets/images/thunder.png" alt="thunder" />
+            <div class="card-details">
+              <h2>18°</h2>
+              <p>May 3</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="weather.js"></script>
+</html>

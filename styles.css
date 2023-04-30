@@ -1,0 +1,294 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,900;1,700&display=swap");
+
+:root {
+  --primary-color: #6320ee;
+  --secondary-color: #f8f0fb;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+* {
+  box-sizing: border-box;
+}
+
+@media (max-width: 800px) {
+  .weather-cont {
+    height: 100vh;
+    background-color: var(--secondary-color);
+    font-family: "Lato", sans-serif;
+  }
+
+  .main-content {
+    background-color: var(--primary-color);
+    border-radius: 0px 0px 40px 40px;
+    height: 65%;
+    border-bottom: 1px solid;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .header {
+    font-family: "Lato", sans-serif;
+    color: var(--secondary-color);
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .location {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0px 20px;
+  }
+  .location .locationicon {
+    width: 20px;
+    height: 20px;
+  }
+  .location p {
+    font-family: "Lato", sans-serif;
+    color: var(--secondary-color);
+  }
+
+  .inputbox {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .inputbox input {
+    height: 40px;
+    border-radius: 50px;
+    border: 0;
+    outline: 0;
+    padding: 4px 12px;
+    width: 80%;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: var(--secondary-color);
+    font-family: "Lato", sans-serif;
+  }
+
+  .inputbox button {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    outline: 0;
+    border: 0;
+    background-color: var(--secondary-color);
+    margin-left: 5px;
+    transition: 1s;
+  }
+
+  .inputbox button:hover {
+    background-color: #cad5ca;
+    transition: 1s;
+  }
+
+  .temperature {
+    width: 100%;
+    font-size: 120px;
+    font-family: "Lato", sans-serif;
+    font-weight: 600;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .daydate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+  }
+
+  .daydate p {
+    margin: 0;
+    margin: 0 5px;
+    color: var(--secondary-color);
+    font-weight: 600;
+  }
+
+  .main-content hr {
+    width: 90%;
+    margin-bottom: 24px;
+  }
+
+  .extrainfo {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .wind-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fas.fa-wind {
+    color: var(--secondary-color);
+    font-size: 50px;
+  }
+
+  .fas.fa-eye {
+    color: var(--secondary-color);
+    font-size: 50px;
+  }
+
+  .wind-card .windspeed {
+    font-size: 18px;
+    margin: 0;
+    color: var(--secondary-color);
+  }
+
+  .wind-card .windlabel {
+    font-size: 12px;
+    margin: 0;
+    color: var(--secondary-color);
+  }
+
+  .wind-card img {
+    height: 50px;
+    width: 50px;
+  }
+
+  .forecast-cont {
+    height: 30%;
+    padding: 0px 20px;
+    font-family: "Lato", sans-serif;
+    font-size: 20px;
+    color: var(--primary-color);
+  }
+
+  .forecast-cards {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .forecast-cont .forecast-cards .card1 {
+    background-color: var(--primary-color);
+    width: 25%;
+    height: 160px;
+    border-radius: 15px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+      rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .card1 .card-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card1 h2 {
+    color: var(--secondary-color);
+    margin: 0;
+    font-size: 40px;
+  }
+
+  .card1 img {
+    width: 50px;
+    margin: 0;
+  }
+
+  .card1 p {
+    font-size: 16px;
+    color: var(--secondary-color);
+    margin: 0;
+  }
+
+  .forecast-cont .forecast-cards .card2 {
+    background-color: var(--primary-color);
+    width: 25%;
+    height: 160px;
+    border-radius: 15px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+      rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .card2 .card-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card2 h2 {
+    color: var(--secondary-color);
+    margin: 0;
+    font-size: 40px;
+  }
+
+  .card2 img {
+    width: 50px;
+    margin: 0;
+  }
+
+  .card2 p {
+    font-size: 16px;
+    color: var(--secondary-color);
+    margin: 0;
+  }
+
+  .forecast-cont .forecast-cards .card3 {
+    background-color: var(--primary-color);
+    width: 25%;
+    height: 160px;
+    border-radius: 15px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+      rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .card3 .card-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card3 h2 {
+    color: var(--secondary-color);
+    margin: 0;
+    font-size: 40px;
+  }
+
+  .card3 img {
+    width: 50px;
+    margin: 0;
+  }
+
+  .card3 p {
+    font-size: 16px;
+    color: var(--secondary-color);
+    margin: 0;
+  }
+}
