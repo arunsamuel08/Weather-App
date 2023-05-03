@@ -7,7 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, minimum-scale=1"
     />
-    <title>SkyWatch</title>
+    <title>Climatrack</title>
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="stylesheet"
@@ -15,76 +15,76 @@
     />
   </head>
   <body>
-    <div class="weather-cont">
-      <div class="main-content">
-        <div class="header"><i class="fas fa-cloud"></i> ClimateWatch</div>
-        <div class="inputbox">
-          <input placeholder="Enter city name" type="text" />
-          <button class="searchbtn"><i class="fas fa-search"></i></button>
-        </div>
-        <div class="location">
-          <img class="locationicon" src="./assets/images/pin.png" />
-          <p>New Delhi, India</p>
-        </div>
-        <div class="temperature">21°</div>
-
-        <div class="daydate">
-          <p class="day">Sunday</p>
-          |
-          <p class="date">30 April</p>
-          |
-          <p class="daytype">Sunny</p>
-        </div>
-
-        <hr />
-
-        <div class="extrainfo">
-          <div class="wind-card">
-            <i class="fas fa-wind"></i>
-            <p class="windspeed">4km/h</p>
-            <p class="windlabel">Wind</p>
+    <div class="main-container">
+      <div class="landing-page">
+        <div class="header">
+          <div class="name_slogan">
+            <h1>Climatrack</h1>
+            <p>Be ready before your journey</p>
           </div>
 
-          <div class="wind-card">
-            <img src="./assets/images/humidity.png" alt="humidity" />
-            <p class="windspeed">4km/h</p>
-            <p class="windlabel">Wind</p>
+          <div class="input-container1">
+            <input class="inputbox" placeholder="Enter the city name" />
+            <button class="inputbtn"><i class="fas fa-search"></i></button>
           </div>
-
-          <div class="wind-card">
-            <i class="fas fa-eye"></i>
-            <p class="windspeed">1KM</p>
-            <p class="windlabel">Visibility</p>
-          </div>
+          <div class="error"><p>The city name entered is wrong!</p></div>
         </div>
       </div>
 
-      <div class="forecast-cont">
-        <div class="forecast-head">
-          <h3>Forecast</h3>
+      <div class="response-div">
+        <div class="input-container2">
+          <input class="inputbox" placeholder="Enter the city name" />
+          <button class="inputbtn"><i class="fas fa-search"></i></button>
         </div>
-        <div class="forecast-cards">
-          <div class="card1">
-            <img src="./assets/images/sun.png" alt="sunny" />
-            <div class="card-details">
-              <h2>26°</h2>
-              <p>May 1</p>
+
+        <div class="city_date">
+          <img src="assets/images/location-pin.png" />
+          <h2 class="cityname">Mumbai</h2>
+          <h2>&nbsp | &nbsp</h2>
+          <h2 class="datetime">Wed, 03 May</h2>
+        </div>
+
+        <div class="response-container">
+          <div class="left-cont">
+            <div class="degree-container">
+              <!-- WEATHER IMAGE -->
+              <div class="weatherimg">
+                <img src="assets/images/rain.png" alt="rainy" />
+              </div>
+
+              <!-- DEGREE AND TYPE OF WEATHER-->
+              <div class="degree_type">
+                <h2 class="temperature">21°C</h2>
+                <h4 class="climatetype">Rainy</h4>
+              </div>
+            </div>
+
+            <div class="card-container">
+              <!-- WIND CARD -->
+              <div class="wind-card">
+                <i class="fas fa-wind"></i>
+                <p class="windspeed">4km/h</p>
+                <p class="windlabel">Wind</p>
+              </div>
+
+              <!-- HUMIDITY CARD -->
+              <div class="humidity-card">
+                <img src="./assets/images/humidity.png" alt="humidity" />
+                <p class="humidity">50%</p>
+                <p class="humiditylabel">Humidity</p>
+              </div>
+
+              <!-- VISIBILITY CARD -->
+              <div class="visibility-card">
+                <i class="fas fa-eye"></i>
+                <p class="visibility">1KM</p>
+                <p class="vislabel">Visibility</p>
+              </div>
             </div>
           </div>
-          <div class="card2">
-            <img src="./assets/images/rainy.png" alt="rainy" />
-            <div class="card-details">
-              <h2>17°</h2>
-              <p>May 2</p>
-            </div>
-          </div>
-          <div class="card3">
-            <img src="./assets/images/thunder.png" alt="thunder" />
-            <div class="card-details">
-              <h2>18°</h2>
-              <p>May 3</p>
-            </div>
-          </div>
+
+          <!-- RIGHT DIV FOR FORECAST OTHER STUFF -->
+          <div class="right-cont"></div>
         </div>
       </div>
     </div>
