@@ -26,6 +26,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  display: none;
 }
 
 .header {
@@ -124,7 +125,6 @@ button i {
   padding: 80px 150px;
   display: flex;
   flex-direction: column;
-  display: none;
 }
 
 .input-container2 {
@@ -190,20 +190,25 @@ button i {
 }
 
 .response-container .left-cont {
-  border-right: 2px solid rgb(255, 255, 255, 0.4);
   width: 50%;
+  padding: 5px;
 }
 
 .degree-container {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  border-bottom: 1px solid rgb(255, 255, 255, 0.4);
   height: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .degree-container img {
-  width: 180px;
+  width: 150px;
   height: auto;
 }
 
@@ -240,8 +245,9 @@ button i {
 .card-container {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   height: 50%;
+  padding: 10px 0px;
 }
 
 .card-container img {
@@ -261,6 +267,15 @@ button i {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 10px;
+  width: 32%;
+  height: 100%;
 }
 
 .wind-card p {
@@ -283,6 +298,15 @@ button i {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 10px;
+  width: 32%;
+  height: 100%;
 }
 
 .humidity-card p {
@@ -311,6 +335,15 @@ button i {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 10px;
+  width: 32%;
+  height: 100%;
 }
 
 .visibility-card p {
@@ -329,8 +362,181 @@ button i {
 }
 
 /* RIGHT CONTAINER */
-.response-container .right-div {
+.response-container .right-cont {
   width: 50%;
+  padding: 5px;
+}
+
+.right-cont .forecast-top-cont {
+  display: flex;
+  width: 100%;
+  height: 50%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.right-cont .forecast-top-cont .day1 {
+  width: 24%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-cont .forecast-top-cont .day2 {
+  width: 24%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-cont .forecast-top-cont .day3 {
+  width: 24%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-cont .forecast-top-cont .day4 {
+  width: 24%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.forecast-top-cont h3 {
+  font-family: var(--font-two);
+  color: #fff;
+  font-size: 40px;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.forecast-top-cont p {
+  font-family: var(--font-two);
+  color: #fff;
+  font-size: 38px;
+  margin: 0;
+  padding: 0;
+}
+
+.forecast-top-cont img {
+  height: 80px;
+  width: 80px;
+}
+
+.others-cont {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+  height: 50%;
+}
+
+.others-cont h1 {
+  font-family: var(--font-two);
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.aqi-cont {
+  width: 49%;
+  height: 100%;
+  background-color: rgba(0, 167, 225, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.aqi_value h1 {
+  font-size: 65px;
+}
+
+.aqi-desc {
+  color: #fff;
+  font-family: var(--font-two);
+  font-size: 32px;
+  margin: 0;
+  padding: 0;
+}
+
+.other-details {
+  width: 49%;
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 5px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.other-details h1 {
+  border-bottom: 2px solid #fff;
+}
+
+.other-details h4 {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-family: var(--font-two);
+  font-size: 20px;
+}
+
+.detail-div {
+  margin: 10px 0px;
+}
+
+.detail-div h4 span {
+  font-weight: 200;
 }
 
 @media (max-width: 1000px) {
