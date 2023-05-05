@@ -32,99 +32,35 @@
       </div>
 
       <div class="response-div">
-        <div class="input-container2">
-          <input class="inputbox" placeholder="Enter the city name" />
-          <button class="searchbtn"><i class="fas fa-search"></i></button>
-        </div>
+        <div class="primary-cont">
+          <div class="date-cont"><h2 class="datetime">Sat, 6 May 2023</h2></div>
 
-        <div class="city_date">
-          <img src="assets/images/location-pin.png" />
-          <h2 class="cityname">New Delhi</h2>
-          <h2>&nbsp | &nbsp</h2>
-          <h2 class="datetime">Wed, 03 May</h2>
-        </div>
-
-        <div class="response-container">
-          <div class="left-cont">
-            <div class="degree-container">
-              <!-- WEATHER IMAGE -->
-              <div class="weatherimg">
-                <img src="assets/images/rain.png" alt="rainy" />
-              </div>
-
-              <!-- DEGREE AND TYPE OF WEATHER-->
-              <div class="degree_type">
-                <h2 class="temperature">21°C</h2>
-                <h4 class="climatetype">Rainy</h4>
-              </div>
-            </div>
-
-            <div class="card-container">
-              <!-- WIND CARD -->
-              <div class="wind-card">
-                <i class="fas fa-wind"></i>
-                <p class="windspeed">4km/h</p>
-                <p class="windlabel">Wind</p>
-              </div>
-
-              <!-- HUMIDITY CARD -->
-              <div class="humidity-card">
-                <img src="./assets/images/humidity.png" alt="humidity" />
-                <p class="humidity">50%</p>
-                <p class="humiditylabel">Humidity</p>
-              </div>
-
-              <!-- VISIBILITY CARD -->
-              <div class="visibility-card">
-                <i class="fas fa-eye"></i>
-                <p class="visibility">1KM</p>
-                <p class="vislabel">Visibility</p>
+          <div class="weather">
+            <img src="assets/images/sunny.png" alt="sunny" />
+            <div class="all_temp">
+              <h1 class="temperature">26°C</h1>
+              <div class="temp_minmax">
+                Min: <span class="temp-min">23°C</span> | Max:
+                <span class="temp-max">27°C</span>
               </div>
             </div>
           </div>
 
-          <!-- RIGHT DIV FOR FORECAST OTHER STUFF -->
-          <div class="right-cont">
-            <div class="forecast-top-cont">
-              <div class="day1">
-                <h3 class="dayname">Fri</h3>
-                <img src="./assets/images/sunny.png" />
-                <p>28°C</p>
-              </div>
-              <div class="day2">
-                <h3 class="dayname">Sat</h3>
-                <img src="./assets/images/sunny.png" />
-                <p>28°C</p>
-              </div>
-              <div class="day3">
-                <h3 class="dayname">Sun</h3>
-                <img src="./assets/images/haze.png" />
-                <p>28°C</p>
-              </div>
-              <div class="day4">
-                <h3 class="dayname">Mon</h3>
-                <img src="./assets/images/thunderstorm.png" />
-                <p>28°C</p>
-              </div>
+          <div class="city-climatetype">
+            <div class="city-cont">
+              <img src="assets/images/location-pin.png" alt="location" />
+              <h4 class="cityname">New Delhi,</h4>
+              &nbsp
+              <h4 class="countrycode">IN</h4>
             </div>
-            <div class="others-cont">
-              <div class="aqi-cont">
-                <div class="aqi_value"><h1>1</h1></div>
-                <div class="aqi-desc">Good</div>
-                <div class="aqi-head">
-                  <h1>Air Quality</h1>
-                </div>
-              </div>
-              <div class="other-details">
-                <h1>Other Details</h1>
-                <div class="detail-div">
-                  <h4 class="detail-desc">Detail Desc: <span>Hello</span></h4>
-                  <h4 class="temp-max">Max Temperature: <span>Hello</span></h4>
-                  <h4 class="temp-min">Min Temperature: <span>Hello</span></h4>
-                  <h4 class="pressure">Pressure: <span>Hello</span></h4>
-                </div>
-              </div>
-            </div>
+            <div class="climatetype">Clouds</div>
+          </div>
+        </div>
+
+        <div class="secondary-cont">
+          <div class="input-container2">
+            <input class="inputbox" placeholder="Enter the city name" />
+            <button class="inputbtn"><i class="fas fa-search"></i></button>
           </div>
         </div>
       </div>
