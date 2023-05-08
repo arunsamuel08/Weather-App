@@ -5,10 +5,6 @@
   --font-two: "Albert Sans", sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 html,
 body {
   margin: 0;
@@ -151,7 +147,7 @@ button i {
   color: #fff;
   font-weight: 200;
   padding: 10px;
-  font-size: 28px;
+  font-size: 20px;
 }
 
 .primary-cont .weather {
@@ -190,7 +186,6 @@ button i {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-right: 2px solid rgba(255, 255, 255, 0.5);
   padding-right: 5px;
   margin-right: 5px;
 }
@@ -210,12 +205,11 @@ button i {
 
 .primary-cont .city-climatetype {
   display: flex;
-}
-
-.primary-cont .city-climatetype .climatetype {
-  color: #fff;
-  font-size: 20px;
-  font-weight: 200;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
 }
 /* Secondary Container */
 
@@ -239,15 +233,15 @@ button i {
   outline: none;
   border: none;
   font-family: var(--font-two);
-  font-size: 24px;
+  font-size: 18px;
   color: #fff;
   width: 100%;
 }
 
 .input-container2 button {
   background-color: transparent;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   outline: none;
   border: none;
@@ -262,4 +256,124 @@ button i {
 .input-container2 button:hover i {
   color: #302b63;
   transition: 0.3s;
+}
+
+.input-container2 button i {
+  font-size: 28px;
+  color: #fff;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.detail-div {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  margin-top: 40px;
+  padding: 20px 0px;
+  padding-bottom: 30px;
+}
+
+.climatetype {
+  font-family: var(--font-two);
+  font-weight: 200;
+  font-size: 60px;
+  letter-spacing: 0;
+  margin: 0;
+  color: #fff;
+}
+
+.detail-desc {
+  font-family: var(--font-two);
+  font-weight: 200;
+  margin: 0;
+  font-size: 30px;
+  margin-left: 5px;
+  color: #fff;
+}
+
+.forecast-cont {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.forecast-cont h3 {
+  margin: 10px 0px;
+  font-family: var(--font-two);
+  color: #fff;
+  font-weight: 100;
+}
+
+.forecast-div {
+  background-color: #302b63;
+  width: 100%;
+  border-radius: 10px;
+  overflow-x: auto;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    inset -10px 0px 10px -10px rgba(0, 0, 0, 0.75);
+}
+
+.forecast-div::-webkit-scrollbar {
+  height: 5px;
+}
+
+.forecast-div::-webkit-scrollbar-track {
+  background-color: #adb5bd;
+  border-radius: 10px;
+}
+
+.forecast-div::-webkit-scrollbar-thumb {
+  width: 50px;
+  background-color: #cae9ff;
+  border-radius: 10px;
+}
+
+.forecast1 {
+  background: rgba(255, 255, 255, 0.13);
+  border-radius: 5px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  margin-right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px;
+  z-index: 100;
+}
+
+.forecast-cont:nth-child(12) {
+  margin-right: 10px;
+}
+
+.scroll-cont {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.forecast1 img {
+  width: 90px;
+  margin-bottom: 10px;
+  margin: 5px;
+}
+
+.forecast1 .forecast-degree {
+  color: #fff;
+  margin: 0;
+  font-family: var(--font-two);
+  font-size: 30px;
+  font-weight: 100;
+}
+
+.forecast1 h6 {
+  color: #fff;
+  margin: 0;
+  font-family: var(--font-two);
+  font-size: 10px;
+  font-weight: 100;
 }

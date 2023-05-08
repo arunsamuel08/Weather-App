@@ -1,6 +1,6 @@
 // Now working with dates
 
-const weekDayNames = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+const weekDayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const monthNames = [
   "Jan",
@@ -25,6 +25,16 @@ const getDate = function (unixtimestamp, timezone) {
   return `${weekDayName}, ${date.getUTCDate()} ${monthName} ${date.getUTCFullYear()}`;
 };
 
+const getTime = function (unixtimestamp, timezone) {
+  const date = new Date((unixtimestamp + timezone) * 1000);
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+
+  return `${hours.toString().padStart(2, 0)}:${minutes
+    .toString()
+    .padStart(2, 0)}`;
+};
+
 // lets work with AQI
 
 // constants for search box and search button
@@ -46,6 +56,12 @@ async function getlatlon(city) {
   // current weather fetch call
   const currentWeather = await fetch(curweatherURL + city + `&appID=${apikey}`);
   var weatherdata = await currentWeather.json();
+
+  // Need latitude and Longitude to use aqi API
+  const lat = weatherdata.coord.lat;
+  const lon = weatherdata.coord.lon;
+  const timezone = weatherdata.timezone;
+
   document.querySelector(".cityname").innerHTML = weatherdata.name + ",";
   document.querySelector(".temperature").innerHTML =
     Math.round(weatherdata.main.temp) + "°C";
@@ -68,8 +84,12 @@ async function getlatlon(city) {
   } else if (weatherdata.weather[0].main == "Rain") {
     document.querySelector(".weather img").src = "assets/images/rain.png";
     document.querySelector(".climatetype").innerHTML = "Rain";
-  } else if (weatherdata.weather[0].main == "Clear") {
-    document.querySelector(".weather img").src = "assets/images/sunny.png";
+  } else if (
+    (weatherdata.weather[0].main == "Clear" &&
+      getTime(weatherdata.dt, timezone) <= "05:00") ||
+    getTime(weatherdata.dt, timezone) >= "19:00"
+  ) {
+    document.querySelector(".weather img").src = "assets/images/moon.png";
     document.querySelector(".climatetype").innerHTML = "Clear";
   } else if (weatherdata.weather[0].main == "Snow") {
     document.querySelector(".weather img").src = "assets/images/snowflake.png";
@@ -78,7 +98,6 @@ async function getlatlon(city) {
     document.querySelector(".weather img").src = "assets/images/haze.png";
     document.querySelector(".climatetype").innerHTML = "Haze";
   }
-
   // other details updation
 
   // document.querySelector(".windspeed").innerHTML =
@@ -90,8 +109,9 @@ async function getlatlon(city) {
   // document.querySelector(".visibility").innerHTML =
   //   weatherdata.visibility / 1000 + "km";
 
-  // document.querySelector(".detail-desc span").innerHTML =
-  //   weatherdata.weather[0].description;
+  document.querySelector(".detail-desc").innerHTML =
+    weatherdata.weather[0].description.charAt(0).toUpperCase() +
+    weatherdata.weather[0].description.slice(1);
 
   // document.querySelector(".pressure span").innerHTML =
   //   weatherdata.main.pressure + " hPa";
@@ -102,10 +122,7 @@ async function getlatlon(city) {
     weatherdata.timezone
   );
 
-  // Need latitude and Longitude to use aqi API
-  const lat = weatherdata.coord.lat;
-  const lon = weatherdata.coord.lon;
-  const timezone = weatherdata.timezone;
+  // GEOCODE
 
   const geocodeURL =
     "http://api.openweathermap.org/geo/1.0/reverse?&limit=1&appid=09fc3bd281fbcbf3679e6880f6a323eb";
@@ -115,12 +132,12 @@ async function getlatlon(city) {
     var geodata = await geocode.json();
     const countryname = geodata[0].country;
 
-    console.log(geocodeURL + `&lat=${lat}` + `&lon=${lon}`);
-
     document.querySelector(".countrycode").innerHTML = countryname;
   }
 
   reversegeocode();
+
+  // forecast data
 
   const forecastURL =
     "http://api.openweathermap.org/data/2.5/forecast?&appid=09fc3bd281fbcbf3679e6880f6a323eb&units=metric";
@@ -131,32 +148,587 @@ async function getlatlon(city) {
     );
     var forecastdata = await forecastresponse.json();
 
+    const forecastTime = getTime(forecastdata.list[0].dt, timezone);
+    console.log(forecastTime);
+
     const forecastdates = [];
     forecastdata.list.forEach(forecast => {
       forecastdates.push(forecast.dt_txt);
     });
 
-    const dt = forecastdata.list[0].dt;
-    const dt_nxtday = forecastdata.list[0].dt + 24 * 60 * 60;
-    const dt_thirdday = forecastdata.list[0].dt + 48 * 60 * 60;
-    const dt_fourthday = forecastdata.list[0].dt + 72 * 60 * 60;
+    // Card1
 
-    document.querySelector(".dayname").innerHTML = getDate(dt, timezone).split(
-      ", "
-    )[0];
+    if (forecastdata.list[0].weather[0].main == "Mist") {
+      document.querySelector(".forecast1:nth-child(1) img").src =
+        "assets/images/mist.png";
+    } else if (forecastdata.list[0].weather[0].main == "Clouds") {
+      document.querySelector(".forecast1:nth-child(1) img").src =
+        "assets/images/clouds.png";
+    } else if (forecastdata.list[0].weather[0].main == "Thunderstorm") {
+      document.querySelector(".forecast1:nth-child(1) img").src =
+        "assets/images/thunderstorm.png";
+    } else if (forecastdata.list[0].weather[0].main == "Rain") {
+      document.querySelector(".forecast1:nth-child(1) img").src =
+        "assets/images/rain.png";
+    } else if (
+      (forecastdata.list[0].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[0].dt, timezone) <= "05:00") ||
+      getTime(forecastdata.list[0].dt, timezone) >= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(1) img").src =
+        "assets/images/moon.png";
+    } else if (forecastdata.list[0].weather[0].main == "Snow") {
+      document.querySelector(".forecast1:nth-child(1) img").src =
+        "assets/images/snowflake.png";
+    } else if (forecastdata.list[0].weather[0].main == "Haze") {
+      document.querySelector(".forecast1:nth-child(1) img").src =
+        "assets/images/haze.png";
+    } else if (
+      (forecastdata.list[0].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[0].dt, timezone) >= "05:00") ||
+      getTime(forecastdata.list[0].dt, timezone) <= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(1) img").src =
+        "assets/images/sunny.png";
+    }
+    document.querySelector(
+      ".forecast1:nth-child(1) .forecast-degree"
+    ).innerHTML = Math.round(forecastdata.list[0].main.temp) + "°C";
 
-    document.querySelector(".dayname1").innerHTML = getDate(
-      dt_nxtday,
+    document.querySelector(".forecast1:nth-child(1) .date").innerHTML = getDate(
+      forecastdata.list[0].dt,
       timezone
-    ).split(", ")[0];
-    document.querySelector(".dayname2").innerHTML = getDate(
-      dt_thirdday,
+    ).substring(0, 10);
+
+    document.querySelector(".forecast1:nth-child(1) .time").innerHTML = getTime(
+      forecastdata.list[0].dt,
       timezone
-    ).split(", ")[0];
-    document.querySelector(".dayname3").innerHTML = getDate(
-      dt_fourthday,
+    );
+
+    // Card 2
+
+    if (forecastdata.list[1].weather[0].main == "Mist") {
+      document.querySelector(".forecast1:nth-child(2) img").src =
+        "assets/images/mist.png";
+    } else if (forecastdata.list[1].weather[0].main == "Clouds") {
+      document.querySelector(".forecast1:nth-child(2) img").src =
+        "assets/images/clouds.png";
+    } else if (forecastdata.list[1].weather[0].main == "Thunderstorm") {
+      document.querySelector(".forecast1:nth-child(2) img").src =
+        "assets/images/thunderstorm.png";
+    } else if (forecastdata.list[1].weather[0].main == "Rain") {
+      document.querySelector(".forecast1:nth-child(2) img").src =
+        "assets/images/rain.png";
+    } else if (
+      (forecastdata.list[1].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[1].dt, timezone) <= "05:00") ||
+      getTime(forecastdata.list[1].dt, timezone) >= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(2) img").src =
+        "assets/images/moon.png";
+    } else if (forecastdata.list[1].weather[0].main == "Snow") {
+      document.querySelector(".forecast1:nth-child(2) img").src =
+        "assets/images/snowflake.png";
+    } else if (forecastdata.list[1].weather[0].main == "Haze") {
+      document.querySelector(".forecast1:nth-child(2) img").src =
+        "assets/images/haze.png";
+    } else if (
+      (forecastdata.list[1].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[1].dt, timezone) >= "05:00") ||
+      getTime(forecastdata.list[1].dt, timezone) <= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(2) img").src =
+        "assets/images/sunny.png";
+    }
+    document.querySelector(
+      ".forecast1:nth-child(2) .forecast-degree"
+    ).innerHTML = Math.round(forecastdata.list[1].main.temp) + "°C";
+
+    document.querySelector(".forecast1:nth-child(2) .date").innerHTML = getDate(
+      forecastdata.list[1].dt,
       timezone
-    ).split(", ")[0];
+    ).substring(0, 10);
+
+    document.querySelector(".forecast1:nth-child(2) .time").innerHTML = getTime(
+      forecastdata.list[1].dt,
+      timezone
+    );
+
+    // Card3
+
+    if (forecastdata.list[2].weather[0].main == "Mist") {
+      document.querySelector(".forecast1:nth-child(3) img").src =
+        "assets/images/mist.png";
+    } else if (forecastdata.list[2].weather[0].main == "Clouds") {
+      document.querySelector(".forecast1:nth-child(3) img").src =
+        "assets/images/clouds.png";
+    } else if (forecastdata.list[2].weather[0].main == "Thunderstorm") {
+      document.querySelector(".forecast1:nth-child(3) img").src =
+        "assets/images/thunderstorm.png";
+    } else if (forecastdata.list[2].weather[0].main == "Rain") {
+      document.querySelector(".forecast1:nth-child(3) img").src =
+        "assets/images/rain.png";
+    } else if (
+      (forecastdata.list[2].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[2].dt, timezone) <= "05:00") ||
+      getTime(forecastdata.list[2].dt, timezone) >= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(3) img").src =
+        "assets/images/moon.png";
+    } else if (forecastdata.list[2].weather[0].main == "Snow") {
+      document.querySelector(".forecast1:nth-child(3) img").src =
+        "assets/images/snowflake.png";
+    } else if (forecastdata.list[2].weather[0].main == "Haze") {
+      document.querySelector(".forecast1:nth-child(3) img").src =
+        "assets/images/haze.png";
+    } else if (
+      (forecastdata.list[2].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[2].dt, timezone) >= "05:00") ||
+      getTime(forecastdata.list[2].dt, timezone) <= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(3) img").src =
+        "assets/images/sunny.png";
+    }
+    document.querySelector(
+      ".forecast1:nth-child(3) .forecast-degree"
+    ).innerHTML = Math.round(forecastdata.list[2].main.temp) + "°C";
+
+    document.querySelector(".forecast1:nth-child(3) .date").innerHTML = getDate(
+      forecastdata.list[2].dt,
+      timezone
+    ).substring(0, 10);
+
+    document.querySelector(".forecast1:nth-child(3) .time").innerHTML = getTime(
+      forecastdata.list[2].dt,
+      timezone
+    );
+
+    // Card 4
+
+    if (forecastdata.list[3].weather[0].main == "Mist") {
+      document.querySelector(".forecast1:nth-child(4) img").src =
+        "assets/images/mist.png";
+    } else if (forecastdata.list[3].weather[0].main == "Clouds") {
+      document.querySelector(".forecast1:nth-child(4) img").src =
+        "assets/images/clouds.png";
+    } else if (forecastdata.list[3].weather[0].main == "Thunderstorm") {
+      document.querySelector(".forecast1:nth-child(4) img").src =
+        "assets/images/thunderstorm.png";
+    } else if (forecastdata.list[3].weather[0].main == "Rain") {
+      document.querySelector(".forecast1:nth-child(4) img").src =
+        "assets/images/rain.png";
+    } else if (
+      (forecastdata.list[3].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[3].dt, timezone) <= "05:00") ||
+      getTime(forecastdata.list[3].dt, timezone) >= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(4) img").src =
+        "assets/images/moon.png";
+    } else if (forecastdata.list[3].weather[0].main == "Snow") {
+      document.querySelector(".forecast1:nth-child(4) img").src =
+        "assets/images/snowflake.png";
+    } else if (forecastdata.list[3].weather[0].main == "Haze") {
+      document.querySelector(".forecast1:nth-child(4) img").src =
+        "assets/images/haze.png";
+    } else if (
+      (forecastdata.list[3].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[3].dt, timezone) >= "05:00") ||
+      getTime(forecastdata.list[3].dt, timezone) <= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(4) img").src =
+        "assets/images/sunny.png";
+    }
+    document.querySelector(
+      ".forecast1:nth-child(4) .forecast-degree"
+    ).innerHTML = Math.round(forecastdata.list[3].main.temp) + "°C";
+
+    document.querySelector(".forecast1:nth-child(4) .date").innerHTML = getDate(
+      forecastdata.list[3].dt,
+      timezone
+    ).substring(0, 10);
+
+    document.querySelector(".forecast1:nth-child(4) .time").innerHTML = getTime(
+      forecastdata.list[3].dt,
+      timezone
+    );
+
+    // Card 5
+
+    if (forecastdata.list[4].weather[0].main == "Mist") {
+      document.querySelector(".forecast1:nth-child(5) img").src =
+        "assets/images/mist.png";
+    } else if (forecastdata.list[4].weather[0].main == "Clouds") {
+      document.querySelector(".forecast1:nth-child(5) img").src =
+        "assets/images/clouds.png";
+    } else if (forecastdata.list[4].weather[0].main == "Thunderstorm") {
+      document.querySelector(".forecast1:nth-child(5) img").src =
+        "assets/images/thunderstorm.png";
+    } else if (forecastdata.list[4].weather[0].main == "Rain") {
+      document.querySelector(".forecast1:nth-child(5) img").src =
+        "assets/images/rain.png";
+    } else if (
+      (forecastdata.list[4].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[4].dt, timezone) <= "05:00") ||
+      getTime(forecastdata.list[4].dt, timezone) >= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(5) img").src =
+        "assets/images/moon.png";
+    } else if (forecastdata.list[4].weather[0].main == "Snow") {
+      document.querySelector(".forecast1:nth-child(5) img").src =
+        "assets/images/snowflake.png";
+    } else if (forecastdata.list[4].weather[0].main == "Haze") {
+      document.querySelector(".forecast1:nth-child(5) img").src =
+        "assets/images/haze.png";
+    } else if (
+      (forecastdata.list[4].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[4].dt, timezone) >= "05:00") ||
+      getTime(forecastdata.list[4].dt, timezone) <= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(5) img").src =
+        "assets/images/sunny.png";
+    }
+    document.querySelector(
+      ".forecast1:nth-child(5) .forecast-degree"
+    ).innerHTML = Math.round(forecastdata.list[4].main.temp) + "°C";
+
+    document.querySelector(".forecast1:nth-child(5) .date").innerHTML = getDate(
+      forecastdata.list[4].dt,
+      timezone
+    ).substring(0, 10);
+
+    document.querySelector(".forecast1:nth-child(5) .time").innerHTML = getTime(
+      forecastdata.list[4].dt,
+      timezone
+    );
+
+    // Card 6
+
+    if (forecastdata.list[5].weather[0].main == "Mist") {
+      document.querySelector(".forecast1:nth-child(6) img").src =
+        "assets/images/mist.png";
+    } else if (forecastdata.list[5].weather[0].main == "Clouds") {
+      document.querySelector(".forecast1:nth-child(6) img").src =
+        "assets/images/clouds.png";
+    } else if (forecastdata.list[5].weather[0].main == "Thunderstorm") {
+      document.querySelector(".forecast1:nth-child(6) img").src =
+        "assets/images/thunderstorm.png";
+    } else if (forecastdata.list[5].weather[0].main == "Rain") {
+      document.querySelector(".forecast1:nth-child(6) img").src =
+        "assets/images/rain.png";
+    } else if (
+      (forecastdata.list[5].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[5].dt, timezone) <= "05:00") ||
+      getTime(forecastdata.list[5].dt, timezone) >= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(6) img").src =
+        "assets/images/moon.png";
+    } else if (forecastdata.list[5].weather[0].main == "Snow") {
+      document.querySelector(".forecast1:nth-child(6) img").src =
+        "assets/images/snowflake.png";
+    } else if (forecastdata.list[5].weather[0].main == "Haze") {
+      document.querySelector(".forecast1:nth-child(6) img").src =
+        "assets/images/haze.png";
+    } else if (
+      (forecastdata.list[5].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[5].dt, timezone) >= "05:00") ||
+      getTime(forecastdata.list[5].dt, timezone) <= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(6) img").src =
+        "assets/images/sunny.png";
+    }
+    document.querySelector(
+      ".forecast1:nth-child(6) .forecast-degree"
+    ).innerHTML = Math.round(forecastdata.list[5].main.temp) + "°C";
+
+    document.querySelector(".forecast1:nth-child(6) .date").innerHTML = getDate(
+      forecastdata.list[5].dt,
+      timezone
+    ).substring(0, 10);
+
+    document.querySelector(".forecast1:nth-child(6) .time").innerHTML = getTime(
+      forecastdata.list[5].dt,
+      timezone
+    );
+
+    // Card 7
+
+    if (forecastdata.list[6].weather[0].main == "Mist") {
+      document.querySelector(".forecast1:nth-child(7) img").src =
+        "assets/images/mist.png";
+    } else if (forecastdata.list[6].weather[0].main == "Clouds") {
+      document.querySelector(".forecast1:nth-child(7) img").src =
+        "assets/images/clouds.png";
+    } else if (forecastdata.list[6].weather[0].main == "Thunderstorm") {
+      document.querySelector(".forecast1:nth-child(7) img").src =
+        "assets/images/thunderstorm.png";
+    } else if (forecastdata.list[6].weather[0].main == "Rain") {
+      document.querySelector(".forecast1:nth-child(7) img").src =
+        "assets/images/rain.png";
+    } else if (
+      (forecastdata.list[6].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[6].dt, timezone) <= "05:00") ||
+      getTime(forecastdata.list[6].dt, timezone) >= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(7) img").src =
+        "assets/images/moon.png";
+    } else if (forecastdata.list[6].weather[0].main == "Snow") {
+      document.querySelector(".forecast1:nth-child(7) img").src =
+        "assets/images/snowflake.png";
+    } else if (forecastdata.list[6].weather[0].main == "Haze") {
+      document.querySelector(".forecast1:nth-child(7) img").src =
+        "assets/images/haze.png";
+    } else if (
+      (forecastdata.list[6].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[6].dt, timezone) >= "05:00") ||
+      getTime(forecastdata.list[6].dt, timezone) <= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(7) img").src =
+        "assets/images/sunny.png";
+    }
+    document.querySelector(
+      ".forecast1:nth-child(7) .forecast-degree"
+    ).innerHTML = Math.round(forecastdata.list[6].main.temp) + "°C";
+
+    document.querySelector(".forecast1:nth-child(7) .date").innerHTML = getDate(
+      forecastdata.list[6].dt,
+      timezone
+    ).substring(0, 10);
+
+    document.querySelector(".forecast1:nth-child(7) .time").innerHTML = getTime(
+      forecastdata.list[6].dt,
+      timezone
+    );
+
+    // Card 8
+
+    if (forecastdata.list[7].weather[0].main == "Mist") {
+      document.querySelector(".forecast1:nth-child(8) img").src =
+        "assets/images/mist.png";
+    } else if (forecastdata.list[7].weather[0].main == "Clouds") {
+      document.querySelector(".forecast1:nth-child(8) img").src =
+        "assets/images/clouds.png";
+    } else if (forecastdata.list[7].weather[0].main == "Thunderstorm") {
+      document.querySelector(".forecast1:nth-child(8) img").src =
+        "assets/images/thunderstorm.png";
+    } else if (forecastdata.list[7].weather[0].main == "Rain") {
+      document.querySelector(".forecast1:nth-child(8) img").src =
+        "assets/images/rain.png";
+    } else if (
+      (forecastdata.list[7].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[7].dt, timezone) <= "05:00") ||
+      getTime(forecastdata.list[7].dt, timezone) >= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(8) img").src =
+        "assets/images/moon.png";
+    } else if (forecastdata.list[7].weather[0].main == "Snow") {
+      document.querySelector(".forecast1:nth-child(8) img").src =
+        "assets/images/snowflake.png";
+    } else if (forecastdata.list[7].weather[0].main == "Haze") {
+      document.querySelector(".forecast1:nth-child(8) img").src =
+        "assets/images/haze.png";
+    } else if (
+      (forecastdata.list[7].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[7].dt, timezone) >= "05:00") ||
+      getTime(forecastdata.list[7].dt, timezone) <= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(8) img").src =
+        "assets/images/sunny.png";
+    }
+    document.querySelector(
+      ".forecast1:nth-child(8) .forecast-degree"
+    ).innerHTML = Math.round(forecastdata.list[7].main.temp) + "°C";
+
+    document.querySelector(".forecast1:nth-child(8) .date").innerHTML = getDate(
+      forecastdata.list[7].dt,
+      timezone
+    ).substring(0, 10);
+
+    document.querySelector(".forecast1:nth-child(8) .time").innerHTML = getTime(
+      forecastdata.list[7].dt,
+      timezone
+    );
+
+    // Card 9
+
+    if (forecastdata.list[8].weather[0].main == "Mist") {
+      document.querySelector(".forecast1:nth-child(9) img").src =
+        "assets/images/mist.png";
+    } else if (forecastdata.list[8].weather[0].main == "Clouds") {
+      document.querySelector(".forecast1:nth-child(9) img").src =
+        "assets/images/clouds.png";
+    } else if (forecastdata.list[8].weather[0].main == "Thunderstorm") {
+      document.querySelector(".forecast1:nth-child(9) img").src =
+        "assets/images/thunderstorm.png";
+    } else if (forecastdata.list[8].weather[0].main == "Rain") {
+      document.querySelector(".forecast1:nth-child(9) img").src =
+        "assets/images/rain.png";
+    } else if (
+      (forecastdata.list[8].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[8].dt, timezone) <= "05:00") ||
+      getTime(forecastdata.list[8].dt, timezone) >= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(9) img").src =
+        "assets/images/moon.png";
+    } else if (forecastdata.list[8].weather[0].main == "Snow") {
+      document.querySelector(".forecast1:nth-child(9) img").src =
+        "assets/images/snowflake.png";
+    } else if (forecastdata.list[8].weather[0].main == "Haze") {
+      document.querySelector(".forecast1:nth-child(9) img").src =
+        "assets/images/haze.png";
+    } else if (
+      (forecastdata.list[8].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[8].dt, timezone) >= "05:00") ||
+      getTime(forecastdata.list[8].dt, timezone) <= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(9) img").src =
+        "assets/images/sunny.png";
+    }
+    document.querySelector(
+      ".forecast1:nth-child(9) .forecast-degree"
+    ).innerHTML = Math.round(forecastdata.list[8].main.temp) + "°C";
+
+    document.querySelector(".forecast1:nth-child(9) .date").innerHTML = getDate(
+      forecastdata.list[8].dt,
+      timezone
+    ).substring(0, 10);
+
+    document.querySelector(".forecast1:nth-child(9) .time").innerHTML = getTime(
+      forecastdata.list[8].dt,
+      timezone
+    );
+
+    // Card 10
+
+    if (forecastdata.list[9].weather[0].main == "Mist") {
+      document.querySelector(".forecast1:nth-child(10) img").src =
+        "assets/images/mist.png";
+    } else if (forecastdata.list[9].weather[0].main == "Clouds") {
+      document.querySelector(".forecast1:nth-child(10) img").src =
+        "assets/images/clouds.png";
+    } else if (forecastdata.list[9].weather[0].main == "Thunderstorm") {
+      document.querySelector(".forecast1:nth-child(10) img").src =
+        "assets/images/thunderstorm.png";
+    } else if (forecastdata.list[9].weather[0].main == "Rain") {
+      document.querySelector(".forecast1:nth-child(10) img").src =
+        "assets/images/rain.png";
+    } else if (
+      (forecastdata.list[9].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[9].dt, timezone) <= "05:00") ||
+      getTime(forecastdata.list[9].dt, timezone) >= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(10) img").src =
+        "assets/images/moon.png";
+    } else if (forecastdata.list[9].weather[0].main == "Snow") {
+      document.querySelector(".forecast1:nth-child(10) img").src =
+        "assets/images/snowflake.png";
+    } else if (forecastdata.list[9].weather[0].main == "Haze") {
+      document.querySelector(".forecast1:nth-child(10) img").src =
+        "assets/images/haze.png";
+    } else if (
+      (forecastdata.list[9].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[9].dt, timezone) >= "05:00") ||
+      getTime(forecastdata.list[9].dt, timezone) <= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(10) img").src =
+        "assets/images/sunny.png";
+    }
+    document.querySelector(
+      ".forecast1:nth-child(10) .forecast-degree"
+    ).innerHTML = Math.round(forecastdata.list[9].main.temp) + "°C";
+
+    document.querySelector(".forecast1:nth-child(10) .date").innerHTML =
+      getDate(forecastdata.list[9].dt, timezone).substring(0, 10);
+
+    document.querySelector(".forecast1:nth-child(10) .time").innerHTML =
+      getTime(forecastdata.list[9].dt, timezone);
+
+    // Card 11
+
+    if (forecastdata.list[10].weather[0].main == "Mist") {
+      document.querySelector(".forecast1:nth-child(11) img").src =
+        "assets/images/mist.png";
+    } else if (forecastdata.list[10].weather[0].main == "Clouds") {
+      document.querySelector(".forecast1:nth-child(11) img").src =
+        "assets/images/clouds.png";
+    } else if (forecastdata.list[10].weather[0].main == "Thunderstorm") {
+      document.querySelector(".forecast1:nth-child(11) img").src =
+        "assets/images/thunderstorm.png";
+    } else if (forecastdata.list[10].weather[0].main == "Rain") {
+      document.querySelector(".forecast1:nth-child(11) img").src =
+        "assets/images/rain.png";
+    } else if (
+      (forecastdata.list[10].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[10].dt, timezone) <= "05:00") ||
+      getTime(forecastdata.list[10].dt, timezone) >= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(11) img").src =
+        "assets/images/moon.png";
+    } else if (forecastdata.list[10].weather[0].main == "Snow") {
+      document.querySelector(".forecast1:nth-child(11) img").src =
+        "assets/images/snowflake.png";
+    } else if (forecastdata.list[10].weather[0].main == "Haze") {
+      document.querySelector(".forecast1:nth-child(11) img").src =
+        "assets/images/haze.png";
+    } else if (
+      (forecastdata.list[10].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[10].dt, timezone) >= "05:00") ||
+      getTime(forecastdata.list[10].dt, timezone) <= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(11) img").src =
+        "assets/images/sunny.png";
+    }
+    document.querySelector(
+      ".forecast1:nth-child(11) .forecast-degree"
+    ).innerHTML = Math.round(forecastdata.list[10].main.temp) + "°C";
+
+    document.querySelector(".forecast1:nth-child(11) .date").innerHTML =
+      getDate(forecastdata.list[10].dt, timezone).substring(0, 10);
+
+    document.querySelector(".forecast1:nth-child(11) .time").innerHTML =
+      getTime(forecastdata.list[10].dt, timezone);
+
+    if (forecastdata.list[11].weather[0].main == "Mist") {
+      document.querySelector(".forecast1:nth-child(12) img").src =
+        "assets/images/mist.png";
+    } else if (forecastdata.list[11].weather[0].main == "Clouds") {
+      document.querySelector(".forecast1:nth-child(12) img").src =
+        "assets/images/clouds.png";
+    } else if (forecastdata.list[11].weather[0].main == "Thunderstorm") {
+      document.querySelector(".forecast1:nth-child(11) img").src =
+        "assets/images/thunderstorm.png";
+    } else if (forecastdata.list[11].weather[0].main == "Rain") {
+      document.querySelector(".forecast1:nth-child(12) img").src =
+        "assets/images/rain.png";
+    } else if (
+      (forecastdata.list[11].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[11].dt, timezone) <= "05:00") ||
+      getTime(forecastdata.list[11].dt, timezone) >= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(12) img").src =
+        "assets/images/moon.png";
+    } else if (forecastdata.list[11].weather[0].main == "Snow") {
+      document.querySelector(".forecast1:nth-child(12) img").src =
+        "assets/images/snowflake.png";
+    } else if (forecastdata.list[11].weather[0].main == "Haze") {
+      document.querySelector(".forecast1:nth-child(12) img").src =
+        "assets/images/haze.png";
+    } else if (
+      (forecastdata.list[11].weather[0].main == "Clear" &&
+        getTime(forecastdata.list[11].dt, timezone) >= "05:00") ||
+      getTime(forecastdata.list[11].dt, timezone) <= "19:00"
+    ) {
+      document.querySelector(".forecast1:nth-child(12) img").src =
+        "assets/images/sunny.png";
+    }
+    document.querySelector(
+      ".forecast1:nth-child(12) .forecast-degree"
+    ).innerHTML = Math.round(forecastdata.list[11].main.temp) + "°C";
+
+    document.querySelector(".forecast1:nth-child(12) .date").innerHTML =
+      getDate(forecastdata.list[11].dt, timezone).substring(0, 10);
+
+    document.querySelector(".forecast1:nth-child(12) .time").innerHTML =
+      getTime(forecastdata.list[11].dt, timezone);
   }
 
   getforecast();
@@ -202,7 +774,7 @@ async function getlatlon(city) {
   return getaqi();
 }
 
-getlatlon("Arkansas");
+getlatlon("New Delhi");
 searchbtn.addEventListener("click", () => {
   getlatlon(searchbox.value);
 });
