@@ -551,7 +551,7 @@ button i {
     display: none;
     flex-direction: column;
     overflow-y: scroll;
-    width: 98%;
+    width: 95%;
   }
 
   .response-div::-webkit-scrollbar {
