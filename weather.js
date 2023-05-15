@@ -163,9 +163,6 @@ async function getlatlon(city) {
       );
       var forecastdata = await forecastresponse.json();
 
-      const forecastTime = getTime(forecastdata.list[0].dt, timezone);
-      console.log(forecastTime);
-
       const forecastdates = [];
       forecastdata.list.forEach(forecast => {
         forecastdates.push(forecast.dt_txt);
