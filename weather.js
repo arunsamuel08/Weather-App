@@ -68,9 +68,11 @@ async function getlatlon(city) {
     document.querySelector(".landing-page").style.display = "flex";
     document.querySelector(".error").style.display = "block";
     document.querySelector(".response-div").style.display = "none";
+    document.querySelector(".main-header").style.display = "none";
   } else {
     document.querySelector(".landing-page").style.display = "none";
     document.querySelector(".response-div").style.display = "flex";
+    document.querySelector(".main-header").style.display = "flex";
     // Need latitude and Longitude to use aqi API
     const lat = weatherdata.coord.lat;
     const lon = weatherdata.coord.lon;

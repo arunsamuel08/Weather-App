@@ -21,6 +21,13 @@ body {
   justify-content: center;
 }
 
+.main-header {
+  font-family: var(--font-one);
+  color: #fff;
+  font-size: 40px;
+  display: none;
+}
+
 .footer {
   position: fixed;
   left: 0;
@@ -35,6 +42,7 @@ body {
   justify-content: center;
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  z-index: 100;
 }
 
 .landing-page {
@@ -149,6 +157,7 @@ button i {
   font-family: var(--font-two);
   display: none;
   align-items: center;
+  margin-top: 20px;
 }
 
 .primary-cont {
