@@ -51,7 +51,7 @@ const searchbtn3 = document.querySelector(".input-container3 button");
 const apikey = "09fc3bd281fbcbf3679e6880f6a323eb";
 
 // geocode api url
-const geoURL = "http://api.openweathermap.org/geo/1.0/direct?&limit=5&q=";
+const geoURL = "https://api.openweathermap.org/geo/1.0/direct?&limit=5&q=";
 
 // current weather api url
 const curweatherURL =
@@ -710,7 +710,7 @@ async function getlatlon(city) {
     getforecast();
 
     const aqiURL =
-      "http://api.openweathermap.org/data/2.5/air_pollution?&appid=09fc3bd281fbcbf3679e6880f6a323eb";
+      "https://api.openweathermap.org/data/2.5/air_pollution?&appid=09fc3bd281fbcbf3679e6880f6a323eb";
 
     async function getaqi() {
       // AQI API to fetch AQI data
