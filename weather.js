@@ -140,7 +140,7 @@ async function getlatlon(city) {
     // GEOCODE
 
     const geocodeURL =
-      "http://api.openweathermap.org/geo/1.0/reverse?&limit=1&appid=09fc3bd281fbcbf3679e6880f6a323eb";
+      "https://api.openweathermap.org/geo/1.0/reverse?&limit=1&appid=09fc3bd281fbcbf3679e6880f6a323eb";
 
     async function reversegeocode() {
       const geocode = await fetch(geocodeURL + `&lat=${lat}` + `&lon=${lon}`);
@@ -155,7 +155,7 @@ async function getlatlon(city) {
     // forecast data
 
     const forecastURL =
-      "http://api.openweathermap.org/data/2.5/forecast?&appid=09fc3bd281fbcbf3679e6880f6a323eb&units=metric";
+      "https://api.openweathermap.org/data/2.5/forecast?&appid=09fc3bd281fbcbf3679e6880f6a323eb&units=metric";
 
     async function getforecast() {
       const forecastresponse = await fetch(
